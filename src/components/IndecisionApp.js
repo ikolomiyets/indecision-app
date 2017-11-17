@@ -5,16 +5,17 @@ import Action from './Action';
 import Header from './Header';
 
 class IndecisionApp extends React.Component {
+    state = {
+        options: []
+    };
+
     constructor(props) {
         super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        console.log('constructor');
-        this.state = {
-            options: props.options
-        };
+        if (props.options) {
+            this.state = {
+                options: props.options
+            }
+        }
     }
 
     componentDidMount() {
@@ -39,11 +40,11 @@ class IndecisionApp extends React.Component {
         console.log('Component will unmount');
     }
 
-    handleDeleteOptions() {
+    handleDeleteOptions = () => {
         this.setState((prevState) => ({ options: [] }));
-    }
+    };
 
-    handleAddOption(newOption) {
+    handleAddOption = (newOption) => {
         if (!newOption) {
             return 'Enter valid value to add item';
         } else if (this.state.options.indexOf(newOption) > -1) {
@@ -51,9 +52,9 @@ class IndecisionApp extends React.Component {
         }
 
         this.setState((prevState) => ( { options: prevState.options.concat([newOption]) }));
-    }
+    };
 
-    handleDeleteOption(optionToRemove) {
+    handleDeleteOption = (optionToRemove) => {
         if (optionToRemove >= this.state.options.length) {
             return 'Incorrect element selected';
         } else {
@@ -63,13 +64,13 @@ class IndecisionApp extends React.Component {
                 }
             ));
         }
-    }
+    };
 
-    handlePick() {
+    handlePick = () => {
         const randomNumber = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNumber];
         alert(option);
-    }
+    };
 
     render() {
         const title = "Indecision";
@@ -84,9 +85,5 @@ class IndecisionApp extends React.Component {
         );
     }
 }
-
-IndecisionApp.defaultProps = {
-    options : []
-};
 
 export default IndecisionApp;
